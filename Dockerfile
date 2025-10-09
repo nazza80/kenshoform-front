@@ -9,7 +9,7 @@ RUN corepack enable && corepack prepare yarn@stable --activate
 COPY . .
 
 # Installa le dipendenze
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 
 # Build del progetto (Vite genera la cartella /app/dist)
 RUN yarn build
