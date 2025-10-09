@@ -5,14 +5,17 @@ WORKDIR /app
 # Abilita Corepack e prepara Yarn 4
 RUN corepack enable && corepack prepare yarn@stable --activate
 
-# Copia tutti i file (inclusi .yarn/ e .yarnrc.yml)
+# Copia tutti i file necessari (inclusi .yarnrc.yml e la cartella .yarn se presente)
 COPY . .
 
 # Installa le dipendenze
 RUN yarn install --frozen-lockfile
 
-# Build del progetto (Vite genera /dist)
+# Build del progetto (Vite genera la cartella /app/dist)
 RUN yarn build
+
+# Debug: mostra i contenuti della cartella /app e /app/dist (se esiste)
+RUN ls -la /app && ls -la /app/dist || true
 
 # Production stage
 FROM nginx:alpine
